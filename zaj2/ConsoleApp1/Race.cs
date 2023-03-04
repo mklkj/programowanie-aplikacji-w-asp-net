@@ -3,25 +3,32 @@ namespace ConsoleApp1;
 public class Race
 {
     public const float Distance = 1000;
-    private List<Horse> horses = new();
+    private readonly List<Horse> _horses = new();
+    private long startTime;
 
     public void SetUpRace()
     {
         var rand = new Random();
         for (var i = 0; i < 5; i++)
         {
-            horses.Add(new Horse((float)(rand.NextDouble() * 50 + 1)));
+            _horses.Add(new Horse((float)(rand.NextDouble() * 50 + 1)));
         }
 
-        foreach (var hin in horses)
+        var barrier = new Barrier(_horses.Count, (b) =>
         {
-            var t = new Thread(() => hin.DoRace(this));
+            Console.WriteLine("START !!!!");
+            startTime = DateTime.Now.Ticks;
+        });
+        foreach (var hin in _horses)
+        {
+            var t = new Thread(() => hin.DoRace(this, barrier));
             t.Start();
         }
     }
 
     public void HorseFinished(Horse horse)
     {
-        Console.WriteLine($"Horse {horse.ID} finished Race");
+        var raceTime = DateTime.Now.Ticks - startTime;
+        Console.WriteLine($"Horse {horse.ID} finished Race in {raceTime} tics");
     }
 }

@@ -12,10 +12,11 @@ public class Horse
         _speed = speed;
     }
 
-    public void DoRace(Race race)
+    public void DoRace(Race race, Barrier barrier)
     {
         Console.WriteLine($"Approaching start line {ID}");
         var distance = 0.0f;
+        barrier.SignalAndWait();
         while (distance < Race.Distance)
         {
             distance += _speed;
