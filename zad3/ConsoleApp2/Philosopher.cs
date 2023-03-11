@@ -13,6 +13,16 @@ public class Philosopher
 
     public void Run()
     {
+        while (true)
+        {
+            RunCycle();
+        }
+    }
+
+    private void RunCycle()
+    {
+        Thread.Sleep(new Random().Next() % 100);
+
         var leftFork = GetLeft();
         Console.WriteLine($"Filozof {_index + 1} czeka na lewy widelec {leftFork.GetIndex() + 1}");
         lock (leftFork)
