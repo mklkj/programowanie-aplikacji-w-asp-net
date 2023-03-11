@@ -41,11 +41,11 @@ public class Philosopher
 
     private Fork GetLeft()
     {
-        return _forks[_index];
+        return _index == 4 ? _forks[_index - 1] : _forks[_index];
     }
 
     private Fork GetRight()
     {
-        return _index == 4 ? _forks.First() : _forks[_index + 1];
+        return _index == 4 ? _forks[_index] : _forks[_index + 1];
     }
 }
